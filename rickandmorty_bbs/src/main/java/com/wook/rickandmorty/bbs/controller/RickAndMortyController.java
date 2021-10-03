@@ -18,7 +18,7 @@ public class RickAndMortyController {
     @Autowired
     private RickAndMortyService rickAndMortyService;
 
-    @GetMapping("/rick-and-morty/{id}")
+    @GetMapping("/rick-and-morty/v1/challenge/{id}")
     public ResponseEntity<RickAndMortyResponse> callRickAndMortyController(@PathVariable("id") int idCharacter) {
         logger.info("callRickAndMortyController start");
         return new ResponseEntity<>(rickAndMortyService.callAclService(idCharacter), HttpStatus.OK);
