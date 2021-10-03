@@ -1,10 +1,13 @@
 package com.wook.rickandmorty.bbs.service;
 
 import com.wook.rickandmorty.bbs.config.LoggerConfiguration;
+import com.wook.rickandmorty.bbs.exception.CommunicationException;
+import com.wook.rickandmorty.bbs.exception.ObjectNotFoundException;
 import com.wook.rickandmorty.bbs.model.*;
 import com.wook.rickandmorty.bbs.util.Util;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -33,20 +36,22 @@ public class RickAndMortyServiceImpl implements RickAndMortyService {
             logger.info("call ACL CharacterService");
             characterResponse = restTemplate.getForObject(character + idCharacter, CharacterResponse.class);
 
-            //get URL for Location
-            locationRequest.setUrl(characterResponse.getLocation().getUrl().toString());
-
-            if (!util.validUrl(locationRequest.getUrl())) {
-                logger.error("URL Location is not valid");
-                new Exception("URL not valid!!!");
+            if (util.validUrl(characterResponse.getLocation().getUrl().toString()) == true) {
+                logger.error("URL Location is valid");
+                //get URL for Location
+                locationRequest.setUrl(characterResponse.getLocation().getUrl().toString());
+                locationResponse = restTemplate.postForObject(location, locationRequest, LocationResponse.class);
             }
 
             logger.info("call ACL LocationService");
             locationResponse = restTemplate.postForObject(location, locationRequest, LocationResponse.class);
 
+        } catch (RestClientResponseException e) {
+            logger.error(e.getMessage());
+            throw new ObjectNotFoundException("Character not found");
         } catch (Exception e) {
             logger.error(e.getMessage());
-            e.printStackTrace();
+            throw new CommunicationException("Communication error");
         }
 
         return rickAndMortyResponseObject(characterResponse, locationResponse);
