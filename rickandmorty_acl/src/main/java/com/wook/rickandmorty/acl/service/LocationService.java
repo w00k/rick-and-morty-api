@@ -4,5 +4,5 @@ import com.wook.rickandmorty.acl.model.LocationResponse;
 
 public interface LocationService {
 
-    public LocationResponse callLocation (int idCharacter);
+    public LocationResponse callLocation (String urlCharacter);
 }

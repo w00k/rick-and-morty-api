@@ -1,9 +1,10 @@
-package com.wook.rickandmorty.acl.config;
+package com.wook.rickandmorty.bbs.config;
 
 import org.apache.logging.log4j.LogManager;
-import java.util.UUID;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class LoggerConfiguration {
 

@@ -13,15 +13,12 @@ public class LocationServiceImpl implements LocationService {
 
     RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${app.endpoint.routers.location.url}")
-    private String url;
-
-    public LocationResponse callLocation (int idCharacter) {
+    public LocationResponse callLocation (String urlCharacter) {
 
         logger.info("callLocation start");
         LocationResponse location = new LocationResponse();
         try {
-            location = restTemplate.getForObject(url + idCharacter, LocationResponse.class);
+            location = restTemplate.getForObject(urlCharacter, LocationResponse.class);
         } catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
