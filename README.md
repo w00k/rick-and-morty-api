@@ -8,7 +8,7 @@ El microservicio posee 2 componentes, pensando en una implementación en docker,
 
 ![estructura ](img/rick-and-morty-ms.png)
 
-## Exposicion
+## Exposición BBS
 
 | Method | URI | Parametros | Observacion |
 | ------------- | ------------- | ------------- | ------------- |
